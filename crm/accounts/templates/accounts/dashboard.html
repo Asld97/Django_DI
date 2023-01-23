@@ -35,7 +35,7 @@
         <h5> LAST 5 ORDERS: </h5>
         <hr>
         <div class="card card-body">
-            <a class="btn btn-primary btn sm btn-block" href="#"> Create Order </a>
+            <a class="btn btn-primary btn sm btn-block" href="{% url 'crm-create-order' %}"> Create Order </a>
             <table class="table table-sm">
                 <tr>                    
                     <th>Product</th>
@@ -51,8 +51,8 @@
                     <td> {{ order.product }} </td>
                     <td> {{ order.date_created }} </td>
                     <td> {{ order.status }} </td>    
-                    <td> <a href="#" class="btn btn-success btn-sm btn-block"> Update  </a> </td>   
-                    <td> <a href="#"  class="btn btn-danger btn-sm btn-block"> Remove </a> </td>   
+                    <td> <a href="{% url 'crm-update-order' order.id %}" class="btn btn-success btn-sm btn-block"> Update  </a> </td>   
+                    <td> <a href="{% url 'crm-delete-order' order.id %}"  class="btn btn-danger btn-sm btn-block"> Remove </a> </td>   
                                                         
                 </tr>
                 {% endfor %}

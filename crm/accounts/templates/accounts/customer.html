@@ -68,8 +68,8 @@
                         <td> {{order.product.category}} </td>
                         <td> {{order.date_created}} </td>
                         <td> {{order.status}} </td>
-                        <td> <a href="#" class="btn btn-outline-success btn-sm btn-block"> Update </a></td>
-                        <td> <a href="#" class="btn btn-outline-danger btn-sm btn-block"> Remove </a> </td>
+                        <td> <a href="{% url 'crm-update-order' order.id %}" class="btn btn-outline-success btn-sm btn-block"> Update </a></td>
+                        <td> <a href="{% url 'crm-delete-order' order.id %}" class="btn btn-outline-danger btn-sm btn-block"> Remove </a> </td>
                     </tr>
                     {% endfor %}
 

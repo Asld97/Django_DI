@@ -1,18 +1,19 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.forms import inlineformset_factory
 from .models import *
 from .forms import OrderForm
 
 def home(request):
     customers = Customer.objects.all()
-    orders = Order.objects.all()
+    orders = Order.objects.all().order_by('-id')
 
     total_customers = customers.count()
 
     total_orders = orders.count()
     delivered = orders.filter(status = 'Delivered').count()
     pending = orders.filter(status = 'Pending').count()
-
+    
     context = {
         'customers': customers,
         'orders': orders,
@@ -43,17 +44,19 @@ def customer(request, pk):
 
     return render(request, 'accounts/customer.html', context)
 
-def createOrder(request):
-
-    form = OrderForm()
+def createOrder(request, pk):
+    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'), extra=5)
+    customer = Customer.objects.get(id=pk)
+    formset = OrderFormSet(queryset=Order.objects.none(), instance=customer)    
+    # form = OrderForm(initial={'customer': customer})
     if request.method == 'POST':        
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            form.save() # Saving to Database
+        formset = OrderFormSet(request.POST, instance=customer)
+        if formset.is_valid():
+            formset.save() # Saving to Database
             return redirect('/')
 
     context = {
-        'form': form
+        'formset': formset,        
         } 
 
     return render(request, 'accounts/order_form.html', context)
@@ -72,7 +75,7 @@ def updateOrder(request, pk):
         'form': form,
         } 
 
-    return render(request, 'accounts/order_form.html', context)
+    return render(request, 'accounts/update_form.html', context)
 
 def deleteOrder(request, pk):
 

@@ -9,8 +9,8 @@
             <div class="card card-body">
                 <h5> Customer </h5>
                 <hr>
-                <a class="btn btn-outline-info btn-sm btn-block" href="#"> Update Customer </a>
-                <a class="btn btn-outline-danger btn-sm btn-block" href="#"> Delete Customer </a>            
+                <a class="btn btn-success btn-sm btn-block" href="#"> Update Customer </a>
+                <a class="btn btn-info btn-sm btn-block" href="{% url 'crm-create-order' customer.id %}"> Place Order </a>            
             </div>
         </div>
 
@@ -68,8 +68,8 @@
                         <td> {{order.product.category}} </td>
                         <td> {{order.date_created}} </td>
                         <td> {{order.status}} </td>
-                        <td> <a href="{% url 'crm-update-order' order.id %}" class="btn btn-outline-success btn-sm btn-block"> Update </a></td>
-                        <td> <a href="{% url 'crm-delete-order' order.id %}" class="btn btn-outline-danger btn-sm btn-block"> Remove </a> </td>
+                        <td> <a href="{% url 'crm-update-order' order.id %}" class="btn btn-success btn-sm btn-block"> Update </a></td>
+                        <td> <a href="{% url 'crm-delete-order' order.id %}" class="btn btn-danger btn-sm btn-block"> Remove </a> </td>
                     </tr>
                     {% endfor %}
 

@@ -39,6 +39,7 @@
         <div class="col">
             <div class="card card-body">
                 <form action="" method="get">
+                    {{myFilter.form}}
                     <button class="btn btn-primary" type="submit"> Search </button>
                 </form>
             
@@ -55,6 +56,7 @@
                     <tr>                    
                         <th>Product</th>
                         <th>Category</th>
+                        <th>Note</th>
                         <th>Date Ordered</th>
                         <th>Status</th>
                         <th>Update</th>
@@ -66,6 +68,7 @@
                     <tr>
                         <td> {{order.product}} </td>
                         <td> {{order.product.category}} </td>
+                        <td> {{order.note}} </td>
                         <td> {{order.date_created}} </td>
                         <td> {{order.status}} </td>
                         <td> <a href="{% url 'crm-update-order' order.id %}" class="btn btn-success btn-sm btn-block"> Update </a></td>

@@ -7,7 +7,9 @@ from .filters import OrderFilter
 # from django.contrib.auth.forms import UserCreationForm # -> Django built-in user creation form
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/login') # -> We cane use name from urls
 def home(request):
     customers = Customer.objects.all()
     orders = Order.objects.all().order_by('-id')
@@ -32,13 +34,16 @@ def home(request):
 
 def registerPage(request):
     
+    if request.user.is_authenticated: # -> only not authenticated user can be on this site
+        return redirect('/')
+    
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid(): # -> check for User login (similarity etc), password(if long enough, proper signs used etc)
             form.save()
             user = form.cleaned_data.get('username')
             messages.success(request, f'Account was created for {user}')
-            return redirect('/login')
+            return redirect('/login') # -> We cane use name from urls
     else:
         form = CreateUserForm()
 
@@ -47,6 +52,9 @@ def registerPage(request):
     return render(request, 'accounts/register.html', context)
 
 def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+
     if request.method == 'POST':
         username = request.POST.get('username') # -> username is get from input name tag
         password = request.POST.get('password') # -> password is get from input name tag    
@@ -65,10 +73,12 @@ def logoutUser(request):
     logout(request)
     return redirect('/login')
 
+@login_required(login_url='/login') # -> We cane use name from urls
 def products(request):
     products = Product.objects.all()
     return render(request, 'accounts/products.html', {'products': products})
 
+@login_required(login_url='/login') # -> We cane use name from urls
 def customer(request, pk):
     customer = Customer.objects.get(id=pk)
 
@@ -88,6 +98,7 @@ def customer(request, pk):
 
     return render(request, 'accounts/customer.html', context)
 
+@login_required(login_url='/login') # -> We cane use name from urls
 def createOrder(request, pk):
     OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'), extra=5)
     customer = Customer.objects.get(id=pk)
@@ -105,6 +116,7 @@ def createOrder(request, pk):
 
     return render(request, 'accounts/order_form.html', context)
 
+@login_required(login_url='/login') # -> We cane use name from urls
 def updateOrder(request, pk):
 
     order = Order.objects.get(id=pk)
@@ -121,6 +133,7 @@ def updateOrder(request, pk):
 
     return render(request, 'accounts/update_form.html', context)
 
+@login_required(login_url='/login') # -> We cane use name from urls
 def deleteOrder(request, pk):
 
     order = Order.objects.get(id=pk)

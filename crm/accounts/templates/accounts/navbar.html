@@ -18,10 +18,13 @@
         <li class="nav-item active">          
           <a class="nav-link" href="{% url 'crm-home' %}"> Dashboard </a>
         </li>
-
         <li class="nav-item">
             <a class="nav-link" href="{% url 'crm-product' %}"> Product </a>
-          </li>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'crm-account' %}"> Settings </a>
+        </li>
         {% endif %}                
       </ul>
     </div>

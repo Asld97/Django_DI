@@ -1,21 +1,24 @@
 from django.db import models
 from django.contrib import admin
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Customer(models.Model):
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE) # models.CASCADE -> after deleting user, we delete customer relaton
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200, null=True)
     # null=True -> enable upload info without specified value in this field
     date_created = models.DateTimeField(auto_now_add=True, null=True) 
-
+    profile_pic = models.ImageField(default="default.png", null=True, blank=True)
     def __str__(self):
-        return self.name
+        return self.name or ''
+    
 class Tag(models.Model):
     name = models.CharField(max_length=200, null=True)    
 
     def __str__(self):
-        return self.name
+        return self.name or ''
 
 class Product(models.Model):
     CATEGORY = (
@@ -31,7 +34,7 @@ class Product(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True) 
 
     def __str__(self):
-        return self.name
+        return self.name or ''
 
 
 
@@ -53,5 +56,5 @@ class Order(models.Model):
     note = models.CharField(max_length=1000, null=True)
 
     def __str__(self):
-        return self.product.name
+        return self.product.name or ''
 

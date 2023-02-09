@@ -13,5 +13,6 @@ urlpatterns = [
     path('register/', views.registerPage, name="crm-register"),
     path('login/', views.loginPage, name="crm-login"),
     path('logout/', views.logoutUser, name="crm-logout"),
-    path('user/', views.userPage, name="crm-user-page" )
+    path('user/', views.userPage, name="crm-user-page" ),
+    path('account/', views.accountSettings, name="crm-account")
 ]

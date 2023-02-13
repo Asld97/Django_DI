@@ -71,14 +71,8 @@ def registerPage(request):
         form = CreateUserForm(request.POST)
         if form.is_valid(): # -> check for User login (similarity etc), password(if long enough, proper signs used etc)
             user = form.save()
-            username = form.cleaned_data.get('username')
-            group = Group.objects.get(name='customer')
-            user.groups.add(group)
-            Customer.objects.create(
-                user = user,
-                name = username
-
-            )
+            username = form.cleaned_data.get('username')         
+           
             messages.success(request, f'Account was created for {username}')
             return redirect('/login') # -> We cane use name from urls
     else:

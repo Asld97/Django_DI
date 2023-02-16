@@ -1,2 +1,1 @@
-# Django_DI
-Django Youtube course - Dennis Ivy
+# Django Training App
